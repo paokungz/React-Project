@@ -23,6 +23,7 @@ function NavBarrr() {
                 <DropdownItem><Link style={{color: '#FFD700' }} to="/Secant">Secant Method</Link></DropdownItem>
               </NavDropdown>
               <NavDropdown  title="Linea Equation" id="nav-dropdown" >
+                <DropdownItem><Link style={{color: '#FFD700' }} to="/Cramer">Cramer Rule</Link></DropdownItem>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

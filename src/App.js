@@ -8,6 +8,7 @@ import Graphical from './method/rootofEQ/Graphical';
 import Newton from './method/rootofEQ/Newtonrapson';
 import Onepoint from './method/rootofEQ/Onepoint';
 import Secant from './method/rootofEQ/Secant';
+import Cramer from './method/linea/Cramer';
 
 const {  Content } = Layout;
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path='Newtonrapson'element={<Newton/>}/>
                 <Route path='Onepoint'element={<Onepoint/>}/>
                 <Route path='Secant'element={<Secant/>}/>
+                <Route path='cramer'element={<Cramer/>}/>
                 </Routes>
             </Content>
         </Layout>

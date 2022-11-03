@@ -37,6 +37,11 @@ const columns = [
         title: "Error",
         key: "error",
         dataIndex: "error"
+    },
+    {
+        title: "F(x)",
+        key: "fxanser",
+        dataIndex: "fxanser"
     }
 ];
 class Bisection extends Component{
@@ -65,6 +70,7 @@ class Bisection extends Component{
 		data['xr'] = []
         data['x'] = []
         data['error'] = []
+        data['fxanser']=[]
 		if (func(this.state.fx, xl) < func(this.state.fx, xr)) {
             increaseFunction = true;
         }
@@ -91,17 +97,18 @@ class Bisection extends Component{
             data['xr'][n] = xr;
             data['x'][n] = xm;
             data['error'][n] = Math.abs(sum).toFixed(8);
+            data['fxanser'][n] = func(this.state.fx , xm);
             n++;
 
 		}while (Math.abs(sum) > inputerror );
-		this.createTable(data['xl'], data['xr'], data['x'], data['error']);
+		this.createTable(data['xl'], data['xr'], data['x'], data['error'],data['fxanser']);
         this.setState({
             showOutputCard: true,
             showGraph: true,
             showcheckans : true
         })
 	}
-    createTable(xl,xr,x,error){
+    createTable(xl,xr,x,error,fxanser){
         dataTable=[]
         for (let i = 0; i < xl.length; i++) {
             dataTable.push({
@@ -109,10 +116,12 @@ class Bisection extends Component{
                 xl: xl[i],
                 xr: xr[i],
                 x: x[i],
-                error: error[i]
+                error: error[i],
+                fxanser : fxanser[i]
             })
-            
+
         }
+        
     }
     reversefunc(){
 
@@ -122,8 +131,8 @@ class Bisection extends Component{
             [event.target.name]: event.target.value
         });
     }
-	render(){
-        let { fx, xl, xr, inputerror  } = this.state;
+	render(){ 
+        let { fx, xl, xr, inputerror } = this.state;
 		return(
 			<div style={{ background: "#FFFF", padding: "30px" }}>
 				<h2 style={{ color: "black", fontWeight: "bold" }}>Bisection</h2>
@@ -151,20 +160,6 @@ class Bisection extends Component{
                         {this.state.showGraph && <Graph fx={fx} title="Bisection Method" />}
                 </div>
 			</div>
-            <div className='row'>
-                {this.state.showcheckans &&  
-                <Card 
-                title={"check ans"}
-                bordered={true}
-                style={{ width: "100%", background: "#2196f3", color: "#FFFFFFFF" }}
-                id="checkAns"
-                >
-                    <h2>f({})={this.state.fx}</h2>
-
-                </Card>
-
-                }
-            </div>
             <div className='row'> 
             {this.state.showOutputCard &&
                         <Card

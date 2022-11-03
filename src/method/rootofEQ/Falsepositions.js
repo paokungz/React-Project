@@ -38,6 +38,11 @@ const columns = [
         title: "Error",
         key: "error",
         dataIndex: "error"
+    } ,
+    {
+        title: "F(x)",
+        key: "fxanser",
+        dataIndex: "fxanser"
     }
 ];
 
@@ -67,6 +72,7 @@ class Falsepositions extends Component {
         data['xr'] = []
         data['x'] = []
         data['error'] = []
+        data['fxanser']=[]
         if (func(this.state.fx, xl) < func(this.state.fx, xr)) {
             increaseFunction = true;
         }
@@ -96,11 +102,12 @@ class Falsepositions extends Component {
             data['xr'][n] = xr;
             data['x'][n] = xi.toFixed(8);
             data['error'][n] = Math.abs(epsilon).toFixed(8);
+            data['fxanser'][n] = func(this.state.fx , xi)
+            console.log()
             n++;
-
         } while (Math.abs(epsilon) > inputerror);
 
-        this.createTable(data['xl'], data['xr'], data['x'], data['error']);
+        this.createTable(data['xl'], data['xr'], data['x'], data['error'],data['fxanser']);
         this.setState({
             showOutputCard: true,
             showGraph: true
@@ -109,7 +116,7 @@ class Falsepositions extends Component {
 
     }
 
-    createTable(xl, xr, x, error) {
+    createTable(xl, xr, x, error,fxanser) {
         dataInTable = []
         for (var i = 0; i < xl.length; i++) {
             dataInTable.push({
@@ -117,7 +124,8 @@ class Falsepositions extends Component {
                 xl: xl[i],
                 xr: xr[i],
                 x: x[i],
-                error: error[i]
+                error: error[i],
+                fxanser : fxanser[i]
             });
         }
 

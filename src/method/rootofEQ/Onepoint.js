@@ -27,6 +27,11 @@ const columns = [
         title: "Error",
         key: "error",
         dataIndex: "error"
+    },
+    {
+        title: "F(x)",
+        key: "fxanser",
+        dataIndex: "fxanser"
     }
 ];
 class Onepoint extends Component{
@@ -49,29 +54,32 @@ class Onepoint extends Component{
         var data = []
         data['x'] = []
         data['error'] = []
+        data['fxanser']=[]
     
     do {
         xnew = func(this.state.fx, xold);
         epsilon = error(xnew, xold)
         data['x'][n] = xnew.toFixed(8);
         data['error'][n] = Math.abs(epsilon).toFixed(8);
+        data['fxanser'][n] = func(this.state.fx , xnew)
         n++;
         xold = xnew;
 
     } while (Math.abs(epsilon) > 0.000001);
-    this.createTable(data['x'], data['error']);
+    this.createTable(data['x'], data['error'],data['fxanser']);
     this.setState({
         showOutputCard: true,
         showGraph: true
     })
     }
-    createTable(x, error) {
+    createTable(x, error,fxanser) {
         dataInTable = []
         for (var i = 0; i < x.length; i++) {
             dataInTable.push({
                 iteration: i + 1,
                 x: x[i],
-                error: error[i]
+                error: error[i],
+                fxanser : fxanser[i]
             });
         }
     }
@@ -84,12 +92,12 @@ class Onepoint extends Component{
         let { fx, x0,inputerror } = this.state;
         return(
             <div style={{ background: "#FFFF", padding: "30px" }}>
-            <h2>One Point Iteration</h2>
+            <h2 style={{ color: "black", fontWeight: "bold" }}>One Point Iteration</h2>
             <div className="row">
                 <div className="col">
                     <Card
                         bordered={true}
-                        style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
+                        style={{ background: "black", borderRadius:"15px", color: "#FFFFFFFF" }}
                         onChange={this.handleChange}
                     >
                         <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>

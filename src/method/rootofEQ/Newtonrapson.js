@@ -28,6 +28,11 @@ const columns = [
         title: "Error",
         key: "error",
         dataIndex: "error"
+    },
+    {
+        title: "F(x)",
+        key: "fxanser",
+        dataIndex: "fxanser"
     }
 ];
 class Newton extends Component{
@@ -51,28 +56,31 @@ class Newton extends Component{
         var data = []
         data['x'] = []
         data['error'] = []
+        data['fxanser']=[]
         do{
             xnew =xold-(func(this.state.fx , xold)/ funcDiff(xold))
             epsilon = error(xnew,xold)
             data['x'][n]=xnew.toFixed(8)
             data['erroe'][n] =Math.abs(epsilon).toFixed(8)
+            data['fxanser'][n] =func(this.state.fx , xnew)
             n++
             xold = xnew
         }while (Math.abs(epsilon)>inputerror)
-        this.createtable(data['x'],data['error'])
+        this.createtable(data['x'],data['error'],data['fxanser'])
         this.setState({
             showOutputCard: true,
             showGraph : true 
         })
         
     }
-    createtable(x ,error){
+    createtable(x ,error,fxanser){
         dataInTable =[]
         for (let i = 0; i < x.length; i++) {
            dataInTable.push({
             iteration: i + 1,
             x: x[i],
-            error: error[i]
+            error: error[i],
+            fxanser : fxanser[i]
            })
             
         }

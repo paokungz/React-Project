@@ -28,6 +28,11 @@ const columns = [
         title: "Error",
         key: "error",
         dataIndex: "error"
+    },
+    {
+        title: "F(x)",
+        key: "fxanser",
+        dataIndex: "fxanser"
     }
 ];
 class Secant extends Component{
@@ -53,34 +58,38 @@ class Secant extends Component{
         var data=[]
         data['y'] = []
         data['error'] = []
+        data['fxanser']=[]
         x.push(x0);
         x.push(x1);
         data['y'][0] = x0;
         data['error'][0] = "---";
+        data['fxanser'][0]= "---";
         do {
             y = x[i] - (func(this.state.fx, x[i]) * ((x[i] - x[i - 1]))) / (func(this.state.fx, x[i]) - func(this.state.fx, x[i - 1]));
             x.push(y);
             epsilon = error(y, x[i]);
             data['y'][n] = y.toFixed(8);
             data['error'][n] = Math.abs(epsilon).toFixed(8);
+            data['fxanser'][n] =func(this.state.fx ,y)
 
             n++;
             i++;
         } while (Math.abs(epsilon) >errorinput);
-        this.createTable(data['y'], data['error']);
+        this.createTable(data['y'], data['error'],data['fxanser']);
         this.setState({
             showOutputCard: true,
             showGraph: true
         })
         
     }
-    createTable(y, error) {
+    createTable(y, error,fxanser) {
         dataInTable = []
         for (var i = 0; i < y.length; i++) {
             dataInTable.push({
                 iteration: i + 1,
                 y: y[i],
-                error: error[i]
+                error: error[i],
+                fxanser : fxanser[i]
             });
         }
     }
@@ -98,7 +107,7 @@ class Secant extends Component{
                 <div className="col">
                     <Card
                         bordered={true}
-                        style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
+                        style={{ background: "black", borderRadius:"15px", color: "#FFFFFFFF" }}
                         onChange={this.handleChange}
                     >
                         <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>

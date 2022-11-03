@@ -48,6 +48,7 @@ class Graphical extends Component{
         var data = []
         data['x'] = []
         data['y'] = []
+        data['fxanser']=[]
         for (var i = parseInt(this.state.start); i <= parseInt(this.state.finish); i++) {
             data['x'].push(i);
             data['y'].push(func(this.state.fx, i));
