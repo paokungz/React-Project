@@ -1,59 +1,70 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.min.css';
 import "../../component.css"
-import { det } from 'mathjs';
 import { Card, Input, Button } from 'antd';
 const InputStyle = {
 	background: "#DAA520",
 	color: "white",
 	fontWeight: "bold",
 	fontSize: "24px"
+}
+var A = [], B = [], X, matrixA = [], matrixB = [], output = []
+class Gjordan extends Component{
 
-};
-var A = [], B = [], answer = [], matrixA = [], matrixB = []
-class Cramer extends Component {
-
-    constructor() {
-        super();
-        this.state = {
-            row: parseInt(0),
-            column: parseInt(0),
+    constructor(){
+        super()
+        this.state={
+            row: 0,
+            column: 0,
             showDimentionForm: true,
             showMatrixForm: false,
             showOutputCard: false
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.cramer = this.cramer.bind(this);
-
+        this.handleChange = this.handleChange.bind(this)
+        this.gjordann = this.gjordann.bind(this)
     }
-
-    cramer() {
-        this.initMatrix();
-        var counter = 0;
-        
-
-        while (counter != this.state.row) {
-            var transformMatrix = JSON.parse(JSON.stringify(A)); //Deep copy
-            console.log(transformMatrix)
-            for (var i = 0; i < this.state.row; i++) {
-                for (var j = 0; j < this.state.column; j++) {
-                    if (j === counter) {
-                        transformMatrix[i][j] = B[i]
-                        break;
-                    }
-
+    gjordann(n){
+        this.matrixCreate()
+        for (var k = 0; k < n; k++) {
+            for (var i = k + 1; i < n; i++) {
+                var factor = A[i][k] / A[k][k];
+                for (var j = k; j < n; j++) {
+                    A[i][j] = A[i][j] - factor * A[k][j];
                 }
+                B[i] = B[i] - factor * B[k];
 
             }
-            counter++;
-            answer.push(<h2>X<sub>{counter}</sub>=&nbsp;&nbsp;{Math.round(det(transformMatrix)) / Math.round(det(A))}</h2>)
-            answer.push(<br />)
+        }
+        //Backward Substitution
+        for (k = n - 1; k >= 0; k--) {
+            for (i = k; i >= 0; i--) {
 
+                if (i === k) {//Identity matrix
+                    factor = 1 / A[i][k];
+
+                    for (j = 0; j < n; j++) {
+                        A[i][j] = A[i][j] * factor;
+                    }
+                    B[i] = B[i] * factor;
+
+
+                }
+                else {
+                    factor = A[i][k] / A[k][k];
+                    for (j = 0; j < n; j++) {
+                        A[i][j] = A[i][j] - factor * A[k][j];
+                    }
+                    B[i] = B[i] - factor * B[k];
+                }
+            }
+        }
+        for (i = 0; i < n; i++) {
+            output.push("X"+(i+1)+"="+B[i]);
+            output.push(<br />)
         }
         this.setState({
             showOutputCard: true
         });
-
     }
 
     createMatrix(row, column) {
@@ -62,7 +73,7 @@ class Cramer extends Component {
                 matrixA.push(<Input style={{
                     width: "14%",
                     height: "50%",
-                    backgroundColor:  "black",
+                    backgroundColor:  "#DAA520",
                     marginInlineEnd: "5%",
                     marginBlockEnd: "5%",
                     color: "white",
@@ -75,7 +86,7 @@ class Cramer extends Component {
             matrixB.push(<Input style={{
                 width: "14%",
                 height: "50%",
-                backgroundColor: "black",
+                backgroundColor: "#DAA520",
                 marginInlineEnd: "5%",
                 marginBlockEnd: "5%",
                 color: "white",
@@ -91,85 +102,77 @@ class Cramer extends Component {
 
 
     }
-
-    initMatrix() {
+    matrixCreate() {
         for (var i = 0; i < this.state.row; i++) {
             A[i] = []
             for (var j = 0; j < this.state.column; j++) {
                 A[i][j] = (parseFloat(document.getElementById("a" + (i + 1) + "" + (j + 1)).value));
+                console.log(A[i][j])
             }
             B.push(parseFloat(document.getElementById("b" + (i + 1)).value));
         }
     }
-
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
-    render() {
+    render(){
         let { row, column } = this.state;
-        return (
-            <div style={{background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Cramer's Rule</h2>
-                <div className="row">
+        return(
+           <div style={{background: "#FFFF", padding: "30px" }} >
+                 <h2 style={{ color: "black", fontWeight: "bold" }}>Gauss Jordan Elimination</h2>
+                 <div  className="row">
                     <div className="col">
-                        <Card
-                            bordered={true}
+                        <Card bordered={true}
                             style={{ background: "black", borderRadius:"15px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                         >
-
+                            
                             {this.state.showDimentionForm &&
                                 <div>
-                                    <h4 style={{color:"white"}}>Row</h4><Input size="large" name="row" style={InputStyle}></Input>
-                                    <h4 style={{color:"white"}}> Column</h4><Input size="large" name="column" style={InputStyle}></Input><br />
+                                    <h2 style={{color : "white"}}>Row</h2><Input size="large" name="row" style={InputStyle}></Input>
+                                    <h2 style={{color : "white"}}>Column</h2><Input size="large" name="column" style={InputStyle}></Input>
                                     <Button id="dimention_button" onClick={
-                                        () => this.createMatrix(row, column)
+                                        () => this.createMatrix(this.state.row, this.state.column)
                                     }
                                         style={{ background: "#4caf50", color: "white" }}>
-                                        Submit
-                                </Button>
+                                        Submit<br></br>
+                                    </Button>
                                 </div>
                             }
+
                             {this.state.showMatrixForm &&
                                 <div>
-                                    <h2 style={{color:"white"}}>Matrix [A]</h2><br />{matrixA}
-                                    <h2 style={{color:"white"}}>Vector [B]<br /></h2>{matrixB}<br/>
+                                    <h2 style={{color : "white"}} >Matrix [A]</h2><br />{matrixA}
+                                    <h2 style={{color : "white"}}>Vector [B]<br /></h2>{matrixB}
+                                    <br/>
                                     <Button
-                                        size="large"
                                         id="matrix_button"
                                         style={{ background: "blue", color: "white" }}
-                                        onClick={() => this.cramer()}>
+                                        onClick={() => this.gjordann(this.state.row)}>
                                         Submit
-                                </Button>
+                                    </Button>
                                 </div>
                             }
-
-
-
                         </Card>
+
                     </div>
                     <div className="col">
                         {this.state.showOutputCard &&
                             <Card
                                 title={"Output"}
                                 bordered={true}
-                                style={{ width: "100%", background: "#3d683d", color: "#FFFFFFFF", float: "left" }}
-                                onChange={this.handleChange}>
-                                <p style={{ fontSize: "24px", fontWeight: "bold" }}>{answer}</p>
+                                style={{ width: 400, background: "#3d683d", color: "#FFFFFFFF", float: "left" }}
+                                onChange={this.handleChange} id="answerCard">
+                                <p style={{ fontSize: "24px", fontWeight: "bold" }}>{output}</p>
                             </Card>
                         }
                     </div>
-                </div>
-
-            </div>
-        );
+                 </div>
+           </div>
+        )
     }
 }
-export default Cramer;
-
-
-
-
+export default Gjordan

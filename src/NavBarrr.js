@@ -24,6 +24,19 @@ function NavBarrr() {
               </NavDropdown>
               <NavDropdown  title="Linea Equation" id="nav-dropdown" >
                 <DropdownItem><Link style={{color: '#FFD700' }} to="/Cramer">Cramer Rule</Link></DropdownItem>
+                <DropdownItem><Link style={{color: '#FFD700' }} to="/Gass">Gauss Elimination</Link></DropdownItem>
+                <DropdownItem><Link style={{color: '#FFD700' }} to="/Gjordan">Gauss Jordan Elimination</Link></DropdownItem>
+                <DropdownItem><Link style={{color: '#FFD700' }} to="/Inverse">Inverse Matrix</Link></DropdownItem>
+                <DropdownItem><Link style={{color: '#FFD700' }} to="/Lu">LU Decomposition</Link></DropdownItem>
+                <DropdownItem><Link style={{color: '#FFD700' }} to="/Conjuate">Conjuate Gradient</Link></DropdownItem>
+              </NavDropdown>
+              <NavDropdown  title="Interpolation" id="nav-dropdown" >
+              <DropdownItem><Link style={{color: '#FFD700' }} to="/NewtonDiv">Newton's divided-differences </Link></DropdownItem>
+              <DropdownItem><Link style={{color: '#FFD700' }} to="/Largange">Largange </Link></DropdownItem>
+              <DropdownItem><Link style={{color: '#FFD700' }} to="/Spline">Spline </Link></DropdownItem>
+
+
+
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

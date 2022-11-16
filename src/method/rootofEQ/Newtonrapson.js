@@ -50,7 +50,7 @@ class Newton extends Component{
     }
 
     newtonrapson(xold,inputerror){
-        var xnew =0
+        var xnew = 0
         var epsilon = parseFloat(0.000000);
         var n = 0;
         var data = []
@@ -100,12 +100,12 @@ class Newton extends Component{
                 <div className="col">
                     <Card
                         bordered={true}
-                        style={{ background: "gray", borderRadius:"15px", color: "#FFFFFFFF" }}
+                        style={{ background: "black", borderRadius:"15px", color: "#FFFFFFFF" }}
                         onChange={this.handleChange}
                     >
-                        <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                        <h2>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
-                        <h2>Error</h2><Input size="large" name="inputerror" style={InputStyle}></Input>
+                        <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                        <h2 style={{color:"white"}}>X<sub>0</sub></h2><Input size="large" name="x0" style={InputStyle}></Input>
+                        <h2 style={{color:"white"}}>Error</h2><Input size="large" name="inputerror" style={InputStyle}></Input>
                         <Button id="submit_button" onClick={
                             () => this.newtonrapson(parseFloat(x0),parseFloat(inputerror))
                         }

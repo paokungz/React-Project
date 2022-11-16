@@ -8,8 +8,8 @@ const error = (xnew, xold) => {
     return Math.abs((xnew - xold) / xnew);
 }
 const funcDiff = (fx, X) => {
-    let scope = {x:parseFloat(X)};
     var expr = derivative(fx, 'x');
+    let scope = {x:parseFloat(X)};
     return expr.evaluate(scope); 
 }
 export{ func,error,funcDiff};

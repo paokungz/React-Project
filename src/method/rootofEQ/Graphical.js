@@ -92,9 +92,9 @@ class Graphical extends Component{
                             style={{ background: "black",borderRadius:"10px", color: "#FFFFFFFF" }}
                             onChange={this.handleChange}
                         >
-                            <h2>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
-                            <h2>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
-                            <h2>Finish</h2><Input size="large" name="finish" style={InputStyle}></Input><br /><br />
+                            <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}>Start</h2><Input size="large" name="start" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}> Finish</h2><Input size="large" name="finish" style={InputStyle}></Input><br /><br />
                             <Button id="submit_button" onClick={
                                 () => this.graphical(parseFloat(start), parseFloat(finish))
                             }
