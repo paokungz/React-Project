@@ -17,6 +17,9 @@ import Conjuate from './method/linea/Conjuate';
 import NewtonDiv from './method/Interpolation/NewtonDiv';
 import Largange from './method/Interpolation/Largange';
 import Spline from './method/Interpolation/spline';
+import Linear from './method/regression/Linear';
+import MultipleLinear from './method/regression/MultipleLinear';
+import Polynomial from './method/regression/Polynomial';
 const {  Content } = Layout;
 function App() {
     console.log(window.location)
@@ -43,6 +46,10 @@ function App() {
                 <Route path='NewtonDiv'element={<NewtonDiv/>}/>
                 <Route path='Largange'element={<Largange/>}/>
                 <Route path='Spline'element={<Spline/>}/>
+                <Route path='Linear'element={<Linear/>}/>
+                <Route path='MultipleLinear'element={<MultipleLinear/>}/>
+                <Route path='Polynomial'element={<Polynomial/>}/>
+
 
 
 

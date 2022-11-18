@@ -150,7 +150,7 @@ class Falsepositions extends Component {
                             <h2 style={{color:"white"}}>f(x)</h2><Input size="large" name="fx" style={InputStyle}></Input>
                             <h2 style={{color:"white"}}> X<sub>L</sub></h2><Input size="large" name="xl" style={InputStyle}></Input>
                             <h2 style={{color:"white"}}>X<sub>R</sub></h2><Input size="large" name="xr" style={InputStyle}></Input><br /><br />
-                            <h2  style={{color:"white"}}>Error</h2><Input size="large" name="inputerror" style={InputStyle}></Input>
+                            <h2 style={{color:"white"}}>Error</h2><Input size="large" name="inputerror" style={InputStyle}></Input>
                             <Button id="submit_button" onClick={
                                 () => this.false_position(parseFloat(xl), parseFloat(xr),parseFloat(inputerror))
                             }

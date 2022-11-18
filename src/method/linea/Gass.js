@@ -119,7 +119,7 @@ class Gass extends Component{
     render() {
         return (
             <div style={{background: "#FFFF", padding: "30px" }}>
-                <h2 style={{ color: "black", fontWeight: "bold" }}>Cramer's Rule</h2>
+                <h2 style={{ color: "black", fontWeight: "bold" }}>Gauss Elimination</h2>
                 <div className="row">
                     <div className="col">
                         <Card

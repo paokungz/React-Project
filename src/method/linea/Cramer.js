@@ -30,9 +30,15 @@ class Cramer extends Component {
     cramer() {
         this.initMatrix();
         var counter = 0;
-        
-
+        if(det(A)==0){
+            answer.push("det = 0  cant resolve")
+            this.setState({
+                showOutputCard: true
+            });
+        }
+        else{
         while (counter != this.state.row) {
+            console.log(A)
             var transformMatrix = JSON.parse(JSON.stringify(A)); //Deep copy
             console.log(transformMatrix)
             for (var i = 0; i < this.state.row; i++) {
@@ -53,7 +59,7 @@ class Cramer extends Component {
         this.setState({
             showOutputCard: true
         });
-
+    }
     }
 
     createMatrix(row, column) {

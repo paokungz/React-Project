@@ -10,7 +10,7 @@ function NavBarrr() {
     return(
         <Navbar bg="dark" expand="lg" variant='dark'>
         <Container>
-          <Navbar.Brand style={{color: '#FFD700'}}>Numerical Method</Navbar.Brand>
+          <Navbar.Brand style={{color: '#FFD700'}}><Link to={"/home"}>Numerical Method</Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -34,10 +34,14 @@ function NavBarrr() {
               <DropdownItem><Link style={{color: '#FFD700' }} to="/NewtonDiv">Newton's divided-differences </Link></DropdownItem>
               <DropdownItem><Link style={{color: '#FFD700' }} to="/Largange">Largange </Link></DropdownItem>
               <DropdownItem><Link style={{color: '#FFD700' }} to="/Spline">Spline </Link></DropdownItem>
-
-
-
+             
               </NavDropdown>
+              <NavDropdown  title="Regression" id="nav-dropdown" >
+              <DropdownItem><Link style={{color: '#FFD700' }} to="/Linear">Linea Regression </Link></DropdownItem>
+              <DropdownItem><Link style={{color: '#FFD700' }} to="/MultipleLinear">MultipleLinear Regression </Link></DropdownItem>
+              <DropdownItem><Link style={{color: '#FFD700' }} to="/Polynomial">Polynomial Regression </Link></DropdownItem>
+              </NavDropdown>
+
             </Nav>
           </Navbar.Collapse>
         </Container>
