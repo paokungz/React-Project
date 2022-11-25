@@ -4,6 +4,25 @@ import { Card, Input, Button, Table } from 'antd';
 import { error, func} from '../../Useful/Chage';
 import Graph from '../../Useful/Graph';
 import "../../component.css"
+import ApexCharts from 'apexcharts';
+import Plot from 'react-plotly.js';
+import {  Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend );
 const InputStyle = {
 	background: "#DAA520",
 	color: "white",
@@ -11,7 +30,7 @@ const InputStyle = {
 	fontSize: "24px"
 
 };
-var dataTable=[]
+var dataTable=[],errarray=[],fxarray=[],iterationarr=[],labels
 const columns = [
     {
         title: "Iteration",
@@ -44,6 +63,26 @@ const columns = [
         dataIndex: "fxanser"
     }
 ];
+const options = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Chart.js Line Chart',
+      },
+    },
+  };
+const data1 = {
+    labels: fxarray,
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: errarray,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+    ],
+}
 class Bisection extends Component{
 	constructor(){
 		super();
@@ -99,38 +138,31 @@ class Bisection extends Component{
             data['error'][n] = Math.abs(sum).toFixed(8);
             data['fxanser'][n] = func(this.state.fx , xm);
             n++;
+            dataTable.push({
+                iteration: n,
+                xl: xl,
+                xr: xr,
+                x: xm,
+                error: Math.abs(sum).toFixed(8),
+                fxanser : func(this.state.fx , xm)
+            })
+            errarray.push(Math.abs(sum).toFixed(8));
+            fxarray.push(xm);
+            iterationarr.push(n)
 
 		}while (Math.abs(sum) > inputerror );
-		this.createTable(data['xl'], data['xr'], data['x'], data['error'],data['fxanser']);
         this.setState({
             showOutputCard: true,
             showGraph: true,
             showcheckans : true
         })
 	}
-    createTable(xl,xr,x,error,fxanser){
-        dataTable=[]
-        for (let i = 0; i < xl.length; i++) {
-            dataTable.push({
-                iteration: i + 1,
-                xl: xl[i],
-                xr: xr[i],
-                x: x[i],
-                error: error[i],
-                fxanser : fxanser[i]
-            })
-
-        }
-        
-    }
-    reversefunc(){
-
-    }
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
+    
 	render(){ 
         let { fx, xl, xr, inputerror } = this.state;
 		return(
@@ -157,7 +189,11 @@ class Bisection extends Component{
 					</Card>
 				</div>
                 <div className='col'>
-                        {this.state.showGraph && <Graph fx={fx} title="Bisection Method" />}
+                        {this.state.showGraph && 
+                      <Line
+                      options={options} data={data1} 
+                      />
+                        }
                 </div>
 			</div>
             <div className='row'> 
@@ -169,6 +205,7 @@ class Bisection extends Component{
                             id="outputCard"
                         >
                             <Table columns={columns} dataSource={dataTable} bodyStyle={{ fontWeight: "bold", fontSize: "18px", color: "black" }}></Table>
+                           
                         </Card>
                     }
             </div>
